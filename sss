@@ -1,0 +1,108 @@
+¡Absolutamente! Aquí tienes un `README.md` súper completo y descriptivo, enfocado exclusivamente en el **Avance 3**.
+
+Este documento está diseñado para que un evaluador pueda entender en profundidad las decisiones de ingeniería, los desafíos y los logros de esta etapa final de optimización, demostrando tu dominio de técnicas avanzadas de SQL y arquitectura de datos.
+
+---
+
+### `README.md` (Versión Detallada - Exclusivo Avance 3)
+
+# 🚀 Proyecto Integrador – Avance 3: SQL Avanzado y Optimización
+
+Este documento detalla los avances correspondientes a la **Fase 3 y final** del Proyecto Integrador. El objetivo de esta etapa fue refinar y optimizar el sistema, moviendo la lógica de análisis compleja desde la aplicación Python hacia la base de datos PostgreSQL.
+
+El principio rector de esta fase fue **"mover el cómputo a los datos, no los datos al cómputo"**. Se implementaron técnicas avanzadas de SQL para mejorar significativamente el rendimiento, la mantenibilidad y la eficiencia del sistema de análisis.
+
+---
+
+## ✅ Objetivos Cumplidos en esta Fase
+
+-   **Crear y ejecutar consultas SQL analíticas avanzadas** utilizando **CTEs (Common Table Expressions)** y **Funciones de Ventana** (`ROW_NUMBER()`, `LAG()`).
+-   **Diseñar y crear dos objetos programables en SQL** para encapsular lógica y simplificar el acceso a los datos. Se implementaron una **Vista** y un **Procedimiento Almacenado**.
+-   **Integrar la ejecución** de estas nuevas consultas y objetos desde la capa de datos de Python (`DataRepository`).
+-   **Documentar y presentar los resultados** en el Jupyter Notebook final, explicando las técnicas utilizadas y los insights obtenidos.
+-   **Resolver desafíos de calidad de datos** identificados en fases anteriores, específicamente con las columnas de fecha.
+-   **Actualizar la documentación final** del proyecto (`README.md`) para reflejar una arquitectura completa y profesional.
+
+---
+
+## 🗂️ Arquitectura y Ficheros Clave (Fase 3)
+
+La arquitectura de tres capas se mantuvo, pero la **capa de datos (PostgreSQL)** fue significativamente enriquecida.
+
+```
+proyecto_integrador/
+├── notebooks/
+│   └── 2_analisis_de_ventas.ipynb   # <-- Actualizado con los análisis de la Fase 3.
+├── src/
+│   └── repository.py              # <-- Actualizado con nuevos métodos para llamar a las queries avanzadas.
+├── sql/
+│   └── 3_advanced_objects.sql     # <-- NUEVO: Script para crear la Vista y el Procedimiento Almacenado.
+└── README.md                      # (Este documento).
+```
+
+---
+
+## 🏛️ Decisiones de Ingeniería y Diseño (Fase 3)
+
+En esta fase, se delegó la responsabilidad del análisis complejo a la base de datos, que está diseñada para manejar estas operaciones de manera óptima.
+
+#### 1. Consultas Analíticas Avanzadas
+
+Para responder preguntas de negocio que van más allá de simples agregaciones, se implementaron dos consultas analíticas clave:
+
+-   **Ranking de Productos por Categoría:**
+    -   **Problema:** Identificar los productos "estrella" dentro de cada categoría. Un simple `GROUP BY` no puede rankear resultados dentro de un grupo.
+    -   **Solución:** Se utilizó una **CTE** para pre-calcular las ventas por producto y luego la función de ventana **`ROW_NUMBER() OVER (PARTITION BY ...)`** para asignar un ranking a cada producto *dentro* de su categoría. Esto permite un filtrado trivial de los "Top N" productos.
+    -   **Justificación:** Esta técnica es estándar para problemas de ranking y es extremadamente eficiente, ya que evita múltiples consultas o un procesamiento complejo en Python.
+
+-   **Análisis de Crecimiento Mensual:**
+    -   **Problema:** Calcular la tasa de crecimiento de ingresos mes a mes, lo que requiere comparar la fila de un mes con la del mes anterior.
+    -   **Solución:** Se usó la función de ventana **`LAG()`** para acceder a los ingresos del mes anterior en la misma fila del mes actual, permitiendo el cálculo del crecimiento porcentual directamente en la sentencia `SELECT`.
+    -   **Justificación:** `LAG()` es la herramienta nativa de SQL para este tipo de análisis de series temporales. Es mucho más performante que traer toda la serie de datos a Pandas para luego hacer un `shift()` y calcular la diferencia.
+
+#### 2. Vista para Simplificación de Datos (`v_ventas_detalladas`)
+
+-   **Problema:** Las consultas de análisis a menudo requerían unir 5 o 6 tablas (`sales`, `customers`, `products`, etc.), lo que resultaba en código SQL repetitivo, propenso a errores y difícil de mantener.
+-   **Solución:** Se creó una **VISTA** llamada `v_ventas_detalladas`. Una vista es una tabla virtual almacenada como una consulta `SELECT` que contiene todos los `JOINs` pre-configurados.
+-   **Justificación:** La vista **abstrae la complejidad**. Ahora, en lugar de escribir `JOINs` complejos, cualquier consulta puede simplemente hacer un `SELECT` a esta vista como si fuera una tabla normal. Esto reduce errores, asegura consistencia y simplifica radicalmente el desarrollo de nuevas consultas.
+
+#### 3. Procedimiento Almacenado para Lógica de Negocio (`sp_reporte_cliente`)
+
+-   **Problema:** Ciertas operaciones, como generar un reporte completo para un cliente específico, representan una lógica de negocio común que es reutilizable y requiere un parámetro de entrada.
+-   **Solución:** Se creó un **PROCEDIMIENTO ALMACENADO** (implementado como una `FUNCTION` en PostgreSQL) que acepta un `CustomerID` como parámetro. Toda la lógica para calcular el total gastado, la categoría favorita y otros KPIs del cliente está encapsulada dentro de este procedimiento en el servidor.
+-   **Justificación:**
+    -   **Rendimiento:** Reduce el tráfico de red, ya que la aplicación solo envía un ID y recibe un pequeño resultado final.
+    -   **Mantenibilidad:** La lógica de negocio del "reporte de cliente" está en un solo lugar. Si necesita cambiar, se modifica el procedimiento sin tocar la aplicación Python.
+    -   **Seguridad y Reutilización:** Expone una funcionalidad de negocio clara y segura que puede ser utilizada por diferentes partes de la aplicación o incluso por otros sistemas.
+
+---
+
+## 📌 Desafío Clave: Calidad de Datos de Origen
+
+-   **El Problema:** Se confirmó que las columnas de fecha (`SalesDate`, `ModifyDate`) contenían datos de texto con formatos inválidos (ej. `"31:24.2"`), lo que impedía su tratamiento como un tipo `TIMESTAMP` nativo.
+-   **La Solución Implementada:** Se abordó este problema de "deuda técnica" directamente en la capa de SQL.
+    1.  **En la Vista:** Se implementó una expresión `CASE WHEN ...` que utiliza expresiones regulares para validar el formato de la fecha en cada fila. Si el formato es válido, lo convierte a `TIMESTAMP`; si es inválido, lo convierte a `NULL`, evitando que las consultas fallen.
+    2.  **En el Script de Actualización (Experimento):** Se diseñó un script (`4_update_products_from_cleaned_csv.sql`) que utiliza un patrón de "staging table" para actualizar los datos desde un CSV limpio. Este script contiene la lógica SQL para parsear y reconstruir las fechas a partir de los deltas de tiempo (ej. `HH:MM.f`), demostrando una solución completa al problema.
+
+---
+
+## ▶️ Cómo Verificar el Avance 3
+
+1.  **Ejecutar los Objetos SQL:** En un cliente SQL, ejecutar el script `sql/3_advanced_objects.sql` para crear la Vista y el Procedimiento Almacenado.
+2.  **Ejecutar el Notebook de Análisis:** Abrir y ejecutar todas las celdas de `notebooks/2_analisis_de_ventas.ipynb`. Las nuevas secciones al final del notebook demostrarán:
+    -   La ejecución de las consultas de ranking y crecimiento mensual.
+    -   La llamada al procedimiento almacenado para generar un reporte de cliente dinámico.
+    -   El uso implícito de la vista en las nuevas consultas, que ahora se ejecutan sin errores de fecha.
+
+---
+
+## ✔️ Checklist de Requisitos (Fase 3)
+
+| Requisito                               | Estado    | Verificación                                     |
+| --------------------------------------- | --------- | ------------------------------------------------ |
+| Consultas con CTEs y Funciones Ventana  | ✅ Cumplido | Métodos en `repository.py` y resultados en notebook. |
+| Creación de Vista                       | ✅ Cumplido | `sql/3_advanced_objects.sql` y su uso en consultas. |
+| Creación de Procedimiento Almacenado    | ✅ Cumplido | `sql/3_advanced_objects.sql` y su uso desde Python. |
+| Integración de todo desde Python        | ✅ Cumplido | El notebook se ejecuta y llama a todos los métodos. |
+| Documentación en Notebook               | ✅ Cumplido | Celdas de Markdown explican cada paso del análisis. |
+| Documentación Final en `README.md`      | ✅ Cumplido | Este mismo documento.                            |
