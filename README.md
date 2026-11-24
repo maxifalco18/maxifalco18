@@ -38,7 +38,6 @@ End-to-end data lake on AWS with batch and streaming paths:
 ## 📂 Other projects
 
 - **[proyecto_final](https://github.com/maxifalco18/proyecto_final)** — Sales analytics system: Python (OOP, SQLAlchemy) + MySQL, design patterns and advanced SQL
-- **[credentials_manager](https://github.com/maxifalco18/credentials_manager)** — Web app to manage credentials, roles and endpoints, with encryption, authentication and Docker deployment
 
 ## 📜 Certifications
 
