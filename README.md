@@ -24,7 +24,7 @@ I build data pipelines and make sure they run reliably in production. At Claro A
 | DevOps | Git, GitHub Actions, Docker, Ansible |
 | Projects | Kafka, Spark Structured Streaming, Delta Lake, Snowflake |
 
-## 🚀 Featured project
+## 🚀 Featured projects
 
 ### [Cloud Data Lakehouse on AWS — Medallion & Lambda Architecture](https://github.com/maxifalco18/PI_M4)
 
@@ -35,8 +35,19 @@ End-to-end data lake on AWS with batch and streaming paths:
 - **Orchestration & CI/CD:** Apache Airflow on Docker, GitHub Actions
 - **Governance & serving:** custom data quality framework, KMS / Lake Formation, Amazon Athena
 
+### [DataOps Reliable Pipeline](https://github.com/maxifalco18/dataops-reliable-pipeline)
+
+Runnable reference for the practices that keep a pipeline trustworthy in production:
+
+- **Data contracts** with quarantine for invalid records (no silent drops)
+- **Idempotent incremental loads:** upserts on the primary key + watermark, committed atomically
+- **Data quality gates** (freshness, nulls, uniqueness, quarantine ratio) that fail the run or alert
+- **Observability:** JSON logs, run audit table, Slack-compatible alerts; Airflow DAG, tests and CI
+
 ## 📂 Other projects
 
+- **[proyecto_integrador_M3](https://github.com/maxifalco18/proyecto_integrador_M3)** — Airbnb NYC pipeline: multi-source ingestion orchestrated with Airflow, with tests and CI
+- **[proyecto_integrador_M2](https://github.com/maxifalco18/proyecto_integrador_M2)** — E-commerce data warehouse: Python ingestion into PostgreSQL and a dbt star schema
 - **[proyecto_final](https://github.com/maxifalco18/proyecto_final)** — Sales analytics system: Python (OOP, SQLAlchemy) + MySQL, design patterns and advanced SQL
 
 ## 📜 Certifications
