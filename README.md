@@ -1,54 +1,54 @@
-# 👋 Hi there! I'm Maximiliano Falco
+# Hi, I'm Maximiliano Falco 👋
 
-🎯 I'm a **Data Analyst at Claro Argentina**, working at the intersection of data integration, automation, and business intelligence. With a background in Industrial Engineering and a strong analytical mindset, I aim to grow into **Data Engineering** and **AI-powered product development** roles.
+**Data Engineer | DataOps** · Córdoba, Argentina (GMT-3) · Open to remote Data Engineer / DataOps roles
 
----
+I build data pipelines and make sure they run reliably in production. At Claro Argentina, I turn network telemetry and operational data into trusted datasets that operations and engineering teams rely on every day.
 
-## ⚙️ Tech Stack
+## 🛠️ What I work on
 
-- **Languages:** Python, SQL  
-- **Data & ETL:** Pandas, REST APIs, data pipelines, gzip/XML/JSON processing  
-- **Databases:** PostgreSQL, MongoDB, OpenSearch, Neo4j  
-- **Visualization:** Power BI  
-- **Backend & Dev:** Flask, FastAPI, Docker, Git, SOLID principles  
-- **AI Tools:** OpenAI API, RAG systems  
-- **Microsoft Ecosystem:** Power Apps, Graph API, OneDrive, Teams  
+- **ETL/ELT pipelines** with Python, SQL, Apache Airflow, PySpark, dbt and AWS, integrating REST and GraphQL APIs
+- **Pipelines that are safe to rerun:** idempotent loads, controlled retries, data quality checks and data contracts
+- **Observability:** monitoring and alerting with OpenSearch (ELK), Grafana and Zabbix, plus root cause analysis
+- **CI/CD for data:** Git and GitHub Actions, promoting changes from sandbox to production
+- **Network automation:** end-to-end use cases with Python and Ansible on the Iquall MAT platform
 
----
+## ⚙️ Tech stack
 
-## 🧠 Key Projects
+| Area | Tools |
+|---|---|
+| Languages | Python, SQL |
+| Orchestration & processing | Apache Airflow, PySpark, dbt, Pandas |
+| Cloud | AWS (S3, Glue, Lambda, Step Functions, Athena) |
+| Databases | PostgreSQL, SQL Server, MongoDB, Neo4j, OpenSearch / Elasticsearch |
+| Observability | OpenSearch (ELK), Grafana, Zabbix |
+| DevOps | Git, GitHub Actions, Docker, Ansible |
+| Projects | Kafka, Spark Structured Streaming, Delta Lake, Snowflake |
 
-### 🌿 EcoWatch  
-Modular data pipeline for processing and caching sensor logs. Built in Python, applying SOLID principles and clean architecture for maintainability.
+## 🚀 Featured project
 
-### 🔐 Credential Manager  
-Web application built with Flask + React to securely manage credentials, roles, and endpoints. Features encryption, authentication, and Docker deployment.
+### [Cloud Data Lakehouse on AWS — Medallion & Lambda Architecture](https://github.com/maxifalco18/PI_M4)
 
-### 📊 Jira Roadmap Viewer (in progress)  
-Python-based tool to fetch and visualize Jira roadmap (epic-task-subtask) as Gantt-style timeline. Ideal for agile team tracking.
+End-to-end data lake on AWS with batch and streaming paths:
 
-### 🤖 Personal AI Chatbot Assistant (POC)  
-Developed with **Gradio**, this chatbot integrates Microsoft 365 (Teams, Outlook, OneDrive) to provide task tracking and context-aware answers from documents, chats, and transcripts.
+- **Ingestion:** Airbyte (PostgreSQL, REST API) and Apache Kafka for real-time telemetry
+- **Processing:** PySpark on AWS Glue with schema enforcement, deduplication and SCD Type 2 (Delta Lake)
+- **Orchestration & CI/CD:** Apache Airflow on Docker, GitHub Actions
+- **Governance & serving:** custom data quality framework, KMS / Lake Formation, Amazon Athena
 
----
+## 📂 Other projects
+
+- **[proyecto_final](https://github.com/maxifalco18/proyecto_final)** — Sales analytics system: Python (OOP, SQLAlchemy) + MySQL, design patterns and advanced SQL
+- **[credentials_manager](https://github.com/maxifalco18/credentials_manager)** — Web app to manage credentials, roles and endpoints, with encryption, authentication and Docker deployment
+
+## 📜 Certifications
+
+- Iquall NetOps Automation Professional (INAP)
+- Iquall Network Automation Associate (INAA)
 
 ## 🌍 Languages
-- Spanish (native) 🇦🇷  
-- English (B2/C1 – professional working proficiency) 🇺🇸  
-- German (A1 – basic knowledge) 🇩🇪  
 
----
+Spanish (native) · English (full professional) · German (elementary)
 
-## 💡 About Me
-I'm a curious and methodical engineer who enjoys turning complexity into clarity. I thrive on building useful, elegant, and scalable solutions with impact.
+## 📫 Let's connect
 
----
-
-## 📫 Let's Connect
-- 💼 [LinkedIn](https://www.linkedin.com/in/maxifalco/)  
-- 📧 maxifalco18@gmail.com  
-- 💻 GitHub: [@maxifalco18](https://github.com/maxifalco18)
-
----
-
-> *"Turning data into decisions that matter."*
+[LinkedIn](https://www.linkedin.com/in/maximilianofalco/) · maxifalco18@gmail.com
